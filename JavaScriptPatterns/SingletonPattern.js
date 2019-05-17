@@ -16,6 +16,22 @@ var employeeData = (function(name, age, designation) {
     }
 })("Mayank", 10, "Developer")
 
+function(name, age, designation) {
+    var name = name;
+    var age = age;
+    var designation = designation;
+
+    (function() {
+        throw "Some Error"
+    })();
+
+    return {
+        empName: name,
+        empAge: age,
+        empDesignation: designation
+    }
+}
+
 
 console.log(employeeData.age);
 
