@@ -25,7 +25,7 @@ function EmployeeDetails() {
             <h2>My Age is: {employeeDetailsObject.age}</h2>
             <h3>My Designation is: {employeeDetailsObject.designation}</h3><hr></hr><br></br>
             
-            <EmployeeAddress></EmployeeAddress>
+            <EmployeeAddress address={employeeDetailsObject.address}></EmployeeAddress>
 
         </div>
     )
