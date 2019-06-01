@@ -2,29 +2,35 @@ import React from "react";
 import ReactDOM from "react-dom";
 
 
+ReactDOM.render(<EmployeeDetails></EmployeeDetails>, document.getElementById("root"));
+
+    
+function GetAdditionalInfo(props) {
+    return (
+        <p>My Additional Info is: {props.additionalData} </p>
+    )
+}
+
 class EmployeeDetails extends React.Component {
     constructor() {
         super();
         this.state = {
             name: "Mayank",
             age: 10,
-            surname: "Gupta"
+            surname: "Gupta",
+            designation: "Developer"
         }
-    }
-
-    changeValue = () => {
-        this.setState({
-            surname: "Agarwal"
-        });
-
-        this.forceUpdate();
     }
 
     render() {
         return (
             <div>
-                <b>Hello World... My First Name is: {this.state.name}.. {this.state.surname}. My Age: {this.state.age}</b><br></br><br></br>
+                <h1>Parent Component</h1>
+                <p>My First Name is: {this.state.name}.. </p>
+                <p>My Surname: {this.state.surname}.. </p>
+                <p> My Age: {this.state.age}</p>
                 <input type="button" value="Click Me" onClick={this.changeValue} /><br></br><br></br>
+                <GetAdditionalInfo additionalData={this.state.designation}></GetAdditionalInfo>
                 
                 <ShowDetails name={this.state.name} initialDetails={this.state}></ShowDetails>
 
@@ -33,23 +39,27 @@ class EmployeeDetails extends React.Component {
     }
 }
 
-function ShowDetails(props) {
+class ShowDetails extends React.Component {
 
-    // Not Allowed.. Props cannot be updated if they are Values
-    //props.name = "Ramit";
-
-    // Allowed, but not recommended..
-    props.initialDetails.name = "ramit";
-
-    // Not Allowed.. Reassignment of Array or Object..
-    props.initialDetails = {
-        name: "Mayank",
-        age: 10,
-        surname: "Gupta"
+    constructor() {
+        super();
+        this.state = {
+            additionalData: "I Live in Delhi"
+        }
     }
+    render() {
+        return (
+            <div>
+                <h1>Child Component</h1>
+                <p>My Surname is: {this.props.initialDetails.surname}.. </p>
+                <p>My Name is: {this.props.initialDetails.name} </p>
 
-    return <div>My Surname is {props.initialDetails.surname}.. My Name is {props.initialDetails.name}</div>
+                <h2>Other Component</h2>
+                <GetAdditionalInfo additionalData={this.state.additionalData}></GetAdditionalInfo>
+            </div>
+        )
+    }
 }
 
 
-ReactDOM.render(<EmployeeDetails></EmployeeDetails>, document.getElementById("root"));
+
