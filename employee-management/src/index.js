@@ -1,65 +1,54 @@
 import React from "react";
 import ReactDOM from "react-dom";
 
-
-ReactDOM.render(<EmployeeDetails></EmployeeDetails>, document.getElementById("root"));
-
-    
-function GetAdditionalInfo(props) {
-    return (
-        <p>My Additional Info is: {props.additionalData} </p>
-    )
-}
-
-class EmployeeDetails extends React.Component {
+class UpdateConcepts extends React.Component {
     constructor() {
         super();
+
         this.state = {
             name: "Mayank",
-            age: 10,
-            surname: "Gupta",
+            age: 20,
             designation: "Developer"
         }
+
+        setTimeout(() => {
+            alert("Component Updated..")
+            this.setState({
+                designation: "Senior Developer"
+            })
+
+            this.setState({
+                name: "Anshul"
+            })
+        }, 3000)
+
+
+        setTimeout(()=> {
+
+            this.state.age = 100;
+            
+            
+        }, 10000);
+    }
+
+    shouldComponentUpdate(nextProps, nextState) {
+        // alert("Should Component Update Called...")
+        // if(this.state.name === nextState.name && this.state.age === nextState.age) {
+        //     return false;
+        // } else return true;
+
+        return false;
     }
 
     render() {
+        alert("Component Re-Rendered")
         return (
             <div>
-                <h1>Parent Component</h1>
-                <p>My First Name is: {this.state.name}.. </p>
-                <p>My Surname: {this.state.surname}.. </p>
-                <p> My Age: {this.state.age}</p>
-                <input type="button" value="Click Me" onClick={this.changeValue} /><br></br><br></br>
-                <GetAdditionalInfo additionalData={this.state.designation}></GetAdditionalInfo>
-                
-                <ShowDetails name={this.state.name} initialDetails={this.state}></ShowDetails>
-
+                <h1>User name: {this.state.name}</h1>
+                <h2>User age: {this.state.age}</h2>
             </div>
         )
     }
 }
 
-class ShowDetails extends React.Component {
-
-    constructor() {
-        super();
-        this.state = {
-            additionalData: "I Live in Delhi"
-        }
-    }
-    render() {
-        return (
-            <div>
-                <h1>Child Component</h1>
-                <p>My Surname is: {this.props.initialDetails.surname}.. </p>
-                <p>My Name is: {this.props.initialDetails.name} </p>
-
-                <h2>Other Component</h2>
-                <GetAdditionalInfo additionalData={this.state.additionalData}></GetAdditionalInfo>
-            </div>
-        )
-    }
-}
-
-
-
+ReactDOM.render(<UpdateConcepts></UpdateConcepts>, document.getElementById("root"));
