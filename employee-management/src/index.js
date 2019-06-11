@@ -1,54 +1,45 @@
 import React from "react";
 import ReactDOM from "react-dom";
 
-class UpdateConcepts extends React.Component {
+export default class PureComponentParent extends React.Component {
     constructor() {
         super();
-
         this.state = {
-            name: "Mayank",
-            age: 20,
-            designation: "Developer"
+            user: {
+                name: "Mayank"
+            }
         }
-
-        setTimeout(() => {
-            alert("Component Updated..")
-            this.setState({
-                designation: "Senior Developer"
-            })
-
-            this.setState({
-                name: "Anshul"
-            })
-        }, 3000)
-
-
-        setTimeout(()=> {
-
-            this.state.age = 100;
-            
-            
-        }, 10000);
     }
 
-    shouldComponentUpdate(nextProps, nextState) {
-        // alert("Should Component Update Called...")
-        // if(this.state.name === nextState.name && this.state.age === nextState.age) {
-        //     return false;
-        // } else return true;
-
-        return false;
+    componentDidMount() {
+        setInterval(() => {
+            this.setState({
+                user: {
+                    name: this.state.user.name + "1"
+                }
+            });
+        }, 1000)
     }
 
     render() {
-        alert("Component Re-Rendered")
         return (
             <div>
-                <h1>User name: {this.state.name}</h1>
-                <h2>User age: {this.state.age}</h2>
+                Parent Component Data: {this.state.user.name}
+                <ChildComponent name={this.state.user.name}></ChildComponent>
             </div>
         )
     }
 }
 
-ReactDOM.render(<UpdateConcepts></UpdateConcepts>, document.getElementById("root"));
+class ChildComponent extends React.PureComponent {
+    render() {
+        console.log("Rerendered");
+        return (
+            <div>
+                User Name: {this.props.name}
+            </div>
+        )
+    }
+}
+
+ReactDOM.render(<PureComponentParent></PureComponentParent>, document.getElementById("root"))
